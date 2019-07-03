@@ -62,6 +62,7 @@ class EditHallComponent extends React.Component {
     let id = this.props.id;
     if (id) {
       fetch(API_BASE_URL + '/halls/update/' + id, {
+        credentials: 'include',
         method: 'PUT',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
@@ -74,6 +75,7 @@ class EditHallComponent extends React.Component {
         });
     } else {
       fetch(API_BASE_URL + '/halls/create', {
+        credentials: 'include',
         method: 'POST',
         body: JSON.stringify(data),
         headers: { 'Content-Type': 'application/json' }
