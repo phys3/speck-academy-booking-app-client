@@ -208,11 +208,26 @@ const CitizensSelectDateTime = props => {
   };
 
   const disableTimePickerHours = timePosition => {
-    const defaultBlockInterval = [0, 1, 2, 3, 4, 5, 6, 7, 22, 23];
+    const defaultBlockInterval = [0, 1, 2, 3, 4, 5, 6, 7, 23];
+
+    const currentHour = moment().hours();
+    if (currentHour > 8) {
+      const disabledHours = disableHoursBeforeCurrent(currentHour);
+      defaultBlockInterval.push.apply(defaultBlockInterval, disabledHours);
+    }
 
     if (timePosition === 'end') {
       const startHour = reservationStartTime.hours();
       defaultBlockInterval.push(startHour);
+
+      const startMinutes = reservationStartTime.minutes();
+      if (startMinutes > 0 && startHour >= 21) {
+        defaultBlockInterval.push(22);
+      }
+    }
+
+    if (timePosition === 'start') {
+      defaultBlockInterval.push(22);
     }
 
     const reservedHours = detectReservedSlots('hours');
@@ -221,6 +236,16 @@ const CitizensSelectDateTime = props => {
     }
 
     return defaultBlockInterval;
+  };
+
+  const disableHoursBeforeCurrent = currentHour => {
+    const hours = [];
+
+    for (let i = 8; i < currentHour; i++) {
+      hours.push(i);
+    }
+
+    return hours;
   };
 
   const disableTimePickerMinutes = timePosition => {
@@ -245,6 +270,17 @@ const CitizensSelectDateTime = props => {
           default:
             break;
         }
+
+        if (endHour === 22) {
+          defaultBlockInterval.push.apply(defaultBlockInterval, [
+            0,
+            15,
+            30,
+            45
+          ]);
+        }
+      } else if (endHour === 22) {
+        defaultBlockInterval.push.apply(defaultBlockInterval, [15, 30, 45]);
       }
     }
 
