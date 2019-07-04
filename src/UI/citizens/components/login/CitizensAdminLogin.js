@@ -16,12 +16,12 @@ import {
   TextField
 } from './CitizensAdminLoginStyle';
 
-const InputComponent = ({ label, inputID, onChange, value }) => (
+const InputComponent = ({ label, inputID, onChange, value, type }) => (
   <div>
     <Label htmlFor={inputID}>{label}</Label>
     <Input
       id={inputID}
-      type="text"
+      type={type}
       required
       pattern="[a-zA-Z0-9\s]+"
       onChange={onChange}
@@ -120,12 +120,14 @@ class CitizensAdminLogin extends Component {
             inputID="login_userName"
             onChange={this.handleUserNameInput}
             value={userName}
+            type="text"
           />
           <InputComponent
             label="Lozinka"
             inputID="login_password"
             onChange={this.handlePasswordInput}
             value={password}
+            type="password"
           />
         </FlexContainer>
         {error ? (

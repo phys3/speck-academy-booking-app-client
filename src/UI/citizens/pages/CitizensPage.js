@@ -190,7 +190,8 @@ class CitizensPage extends Component {
 
   isRequestDataReady = () => {
     for (const prop in this.state.post)
-      if (!this.state.post[prop]) return false;
+      if (!this.state.post[prop] && prop !== 'citizenOrganization')
+        return false;
 
     return true;
   };

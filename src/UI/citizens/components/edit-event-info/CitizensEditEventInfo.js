@@ -72,7 +72,6 @@ export default ({ handleChange, post, enableForm }) => {
               name="citizenOrganization"
               onChange={handleChange}
               value={post.citizenOrganization}
-              required
               disabled={!enableForm}
             />
           </FormInlineInput>
